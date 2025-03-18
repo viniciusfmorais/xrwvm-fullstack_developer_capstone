@@ -124,3 +124,33 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+/* aaaaaaaaaaaaaaaaaa*/
+
+
+   
+.contact-info p {
+  text-align: center;
+  color: #1E90FF;
+  margin: 5px 0;
+}
+
+.contact-divider {
+  width: 1px;
+  background-color: #ddd;
+  margin: 0 20px;
+}
+
+.contact-section {
+  display: flex;
+  padding-top: 20px;
+}
+
+.contact-icon {
+  width: 700px;
+  text-align: center;
+}
+
+.contact-details {
+  flex: 1;
+}

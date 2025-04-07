@@ -106,14 +106,20 @@ def get_dealerships(request, state="All"):
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 # def get_dealer_reviews(request,dealer_id):
 def get_dealer_reviews(request, dealer_id):
-    # if dealer id has been provided
     if dealer_id:
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail["review"])
-            print(response)
-            review_detail["sentiment"] = response["sentiment"]
+            try:
+                response = analyze_review_sentiments(review_detail["review"])
+                if response:  # Check if response is not None
+                    print(response)
+                    review_detail["sentiment"] = response.get("sentiment", "Unknown")  # Use 'Unknown' as default
+                else:
+                    review_detail["sentiment"] = "Unknown"  # Default sentiment if response is None
+            except Exception as e:
+                print(f"Error analyzing sentiment: {e}")
+                review_detail["sentiment"] = "Unknown"  # Set default sentiment if an error occurs
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
@@ -133,15 +139,18 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 # def add_review(request):
 def add_review(request):
-    if(request.user.is_anonymous == False):
-        data = json.loads(request.body)
+    if request.user.is_anonymous is False:  # Verifica se o usuário está autenticado
+        data = json.loads(request.body)  # Carrega os dados enviados no corpo da requisição
         try:
+            # Envia a avaliação para o serviço de API (descomente a linha abaixo)
             response = post_review(data)
-            return JsonResponse({"status":200})
-        except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            return JsonResponse({"status": 200, "message": "Review posted successfully"})
+        except Exception as err:
+            return JsonResponse(
+                {"status": 401, "message": "Error in posting review: " + str(err)}
+            )
     else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
 
 # Module import
 from .restapis import get_request, analyze_review_sentiments, post_review, searchcars_request

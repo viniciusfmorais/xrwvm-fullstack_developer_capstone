@@ -58,22 +58,26 @@ def post_review(data_dict):
     except Exception as err:
         print("A network exception occurred: ", err)
 
+
 # def searchcars_request(endpoint, **kwargs):
 def searchcars_request(endpoint, **kwargs):
     params = ""
-    if (kwargs):
+    if kwargs:
         for key, value in kwargs.items():
-            params = params+key + "=" + value + "&"
+            params = params + key + "=" + value + "&"
 
-    request_url = searchcars_url+endpoint+"?"+params
+    request_url = searchcars_url + endpoint + "?" + params
 
-    print("GET from {} ".format(request_url))
+    print("GET from {}".format(request_url))
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
+        response.raise_for_status()  # Check if the request was successful
         return response.json()
-    except:
-        # If any error occurs
-        print("Network exception occurred")
+    except requests.exceptions.RequestException as e:
+        # Handle the exception (network or HTTP error)
+        print(f"Network exception occurred: {e}")
+        return None  # Or any appropriate fallback value
     finally:
         print("GET request call complete!")
+        

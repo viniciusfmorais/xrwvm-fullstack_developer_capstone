@@ -80,4 +80,3 @@ def searchcars_request(endpoint, **kwargs):
         return None  # Or any appropriate fallback value
     finally:
         print("GET request call complete!")
-        

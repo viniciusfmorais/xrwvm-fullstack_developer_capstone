@@ -54,9 +54,24 @@ def initiate():
             "year": 2023,
             "car_make": car_make_instances[1],
         },
-        {"name": "A4", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
-        {"name": "A5", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
-        {"name": "A6", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
+        {
+            "name": "A4",
+            "type": "SUV",
+            "year": 2023,
+            "car_make": car_make_instances[2],
+        },
+        {
+            "name": "A5",
+            "type": "SUV",
+            "year": 2023,
+            "car_make": car_make_instances[2],
+        },
+        {
+            "name": "A6",
+            "type": "SUV",
+            "year": 2023,
+            "car_make": car_make_instances[2],
+        },
         {
             "name": "Sorrento",
             "type": "SUV",
